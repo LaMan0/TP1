@@ -10,8 +10,10 @@ if ($id <= 0) {
 } else {
     require __DIR__ . '/includes/bdd.php';
 
+    // L'id arrive par l'URL : prepare() + execute(), contrairement à la liste publique dont le SQL est fixe.
     $requete = $pdo->prepare('SELECT id, nom, genre, pays FROM artiste WHERE id = :id');
     $requete->execute(['id' => $id]);
+    // Une ligne, ou false. fetchAll() n'aurait pas de sens pour une fiche.
     $artiste = $requete->fetch();
 
     if ($artiste === false) {

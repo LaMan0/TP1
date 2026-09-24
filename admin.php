@@ -1,4 +1,5 @@
 <?php
+// auth.php d'abord : sans login, redirection vers connexion.php ; sans rôle admin, 403. La requête SQL n'est pas exécutée.
 require __DIR__ . '/includes/auth.php';
 require __DIR__ . '/includes/bdd.php';
 

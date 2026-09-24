@@ -17,15 +17,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($nom === '') {
         $erreur = 'Le nom est obligatoire.';
     } elseif (mb_strlen($nom) > 120) {
+        // mb_strlen compte les caractères, pas les octets : un accent ne « mange » pas deux places.
         $erreur = 'Le nom est limité à 120 caractères.';
     } elseif (mb_strlen($genre) > 60 || mb_strlen($pays) > 60) {
         $erreur = 'Le genre et le pays sont limités à 60 caractères.';
     }
 
+    // On n'écrit en base que si les trois étapes sont passées : lecture, contrôles, puis enregistrement.
     if ($erreur === '') {
+        require __DIR__ . '/includes/bdd.php';
 
-        / Acompléter  TODO 3.1 — Enregistrer l’artiste puis rediriger vers admin.php.
+        // Les :nom restent des marqueurs. execute() transmet les valeurs à part : elles ne deviennent pas du SQL.
+        $requete = $pdo->prepare(
+            'INSERT INTO artiste (nom, genre, pays) VALUES (:nom, :genre, :pays)'
+        );
+        $requete->execute([
+            'nom' => $nom,
+            'genre' => $genre,
+            'pays' => $pays,
+        ]);
 
+        // Post/Redirect/Get : le navigateur quitte cette page, un rechargement ne réinsère pas l'artiste.
+        header('Location: admin.php');
+        exit;
     }
 }
 
