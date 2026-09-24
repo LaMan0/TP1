@@ -13,18 +13,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $motDePasse = (string) ($_POST['mot_de_passe'] ?? '');
     $jeton = (string) ($_POST['csrf'] ?? '');
 
+    // Le jeton du formulaire doit être celui de la session. hash_equals évite une comparaison qui fuit le temps de calcul.
     if (!hash_equals($_SESSION['csrf'], $jeton)) {
         $erreur = 'Formulaire expiré. Réessayez.';
     } else {
         require __DIR__ . '/includes/bdd.php';
 
+        // :login n'est pas concaténé au SQL : un login du genre ' OR 1=1 -- ne change pas la requête.
         $requete = $pdo->prepare(
             'SELECT id, login, mot_de_passe, role FROM utilisateur WHERE login = :login'
         );
         $requete->execute(['login' => $login]);
+        // false si ce login n'existe pas. On ne le dit pas à l'écran : même message que pour un mauvais mot de passe.
         $utilisateur = $requete->fetch();
 
+        // Vérification en PHP, jamais dans un WHERE : password_hash() change de sel à chaque appel, l'empreinte n'est pas recalculable.
         if ($utilisateur && password_verify($motDePasse, $utilisateur['mot_de_passe'])) {
+            // Nouveau id de session après login : un identifiant fixé avant la connexion ne sert plus.
             session_regenerate_id(true);
             $_SESSION['login'] = $utilisateur['login'];
             $_SESSION['role'] = $utilisateur['role'];

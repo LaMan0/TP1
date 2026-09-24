@@ -14,6 +14,7 @@
         <a href="artistes.php">Artistes</a>
         <a href="admin.php">Administration</a>
         <?php if (isset($_SESSION['login'])): ?>
+        <?php // Formulaire, pas un lien : deconnexion.php n'accepte qu'un POST accompagné du jeton de session. ?>
         <form method="post" action="deconnexion.php" class="deconnexion">
             <input type="hidden" name="csrf" value="<?= htmlspecialchars($_SESSION['csrf']) ?>">
             <button type="submit">Se déconnecter</button>
