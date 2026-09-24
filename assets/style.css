@@ -1,0 +1,133 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font: 1rem/1.6 system-ui, sans-serif;
+    color: #202a3a;
+    background: #f4f6fa;
+}
+
+header,
+footer {
+    padding: 1.25rem max(1rem, calc((100% - 960px) / 2));
+    color: white;
+    background: #172d48;
+}
+
+.marque {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+nav {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+header a {
+    color: white;
+}
+
+main {
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: white;
+    border-radius: .5rem;
+}
+
+a {
+    color: #174fa0;
+}
+
+a:focus-visible {
+    outline: 3px solid #d88100;
+    outline-offset: 4px;
+}
+
+.bouton {
+    display: inline-block;
+    padding: .6rem 1rem;
+    color: white;
+    background: #174fa0;
+    border-radius: .3rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+caption {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+th,
+td {
+    padding: .7rem;
+    text-align: left;
+    border-bottom: 1px solid #d9e0eb;
+}
+
+th {
+    background: #edf2fa;
+}
+
+dt {
+    font-weight: bold;
+}
+
+dd {
+    margin: 0 0 1rem;
+}
+
+form:not(.deconnexion) {
+    display: grid;
+    max-width: 32rem;
+    gap: .6rem;
+}
+
+input {
+    padding: .6rem;
+    font: inherit;
+    border: 1px solid #718096;
+    border-radius: .3rem;
+}
+
+button {
+    padding: .6rem 1rem;
+    font: inherit;
+    color: white;
+    cursor: pointer;
+    background: #174fa0;
+    border: 0;
+    border-radius: .3rem;
+}
+
+.deconnexion button {
+    color: #172d48;
+    background: white;
+}
+
+[role="alert"] {
+    padding: .8rem;
+    background: #fff0f0;
+    border-left: 4px solid #a32929;
+}
+
+@media (max-width: 600px) {
+    main {
+        margin: 1rem .5rem;
+        padding: .7rem;
+    }
+
+    th,
+    td {
+        padding: .4rem;
+    }
+}
